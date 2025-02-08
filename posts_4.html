@@ -4,9 +4,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Protect your digital assets with Ledger Live - secure and efficient management for your cryptocurrency portfolio." name="description"/>
-<meta content="ledger, ledger live, digital assets, cryptocurrency, security" name="keywords"/>
-<title>Ledger Live | Safeguardtect Your Digital Assets</title>
+<meta content="Store and grow your funds safely with Ledger. Secure and efficient cryptocurrency management solutions." name="description"/>
+<meta content="ledger, ledger live, ledger desktop, cryptocurrency, secure storage, fund management" name="keywords"/>
+<meta content="Ledger" name="author"/>
+<title>ledger-sys.github.io</title>
 <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
@@ -17,7 +18,8 @@
         background-color: #f8f8f8;
     }
     h1, h2, h3, h4, h5, h6 {
-        color: #000;
+        font-weight: 700;
+        color: #1a1a1a;
     }
     .btn-primary {
         background-color: #4a4a4a;
@@ -31,7 +33,7 @@
 <script crossorigin="anonymous" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Add smooth scrolling to all links
+        // Implement smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -42,17 +44,29 @@
         });
 
         // Implement lazy loading for images
-        if ('loading' in HTMLImageElement.prototype) {
-            const images = document.querySelectorAll("img.lazyload");
-            images.forEach(img => {
-                img.src = img.dataset.src;
+        const images = document.querySelectorAll('img[data-src]');
+        const config = {
+            rootMargin: '0px 0px 50px 0px',
+            threshold: 0
+        };
+
+        let observer = new IntersectionObserver(function (entries, self) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    preloadImage(entry.target);
+                    self.unobserve(entry.target);
+                }
             });
-        } else {
-            // Fallback for browsers that don't support lazy loading
-            let script = document.createElement("script");
-            script.async = true;
-            script.src = "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js";
-            document.body.appendChild(script);
+        }, config);
+
+        images.forEach(image => {
+            observer.observe(image);
+        });
+
+        function preloadImage(img) {
+            const src = img.getAttribute('data-src');
+            if (!src) { return; }
+            img.src = src;
         }
     });
 </script>
@@ -71,26 +85,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const acceptBtn = document.getElementById('acceptCookies');
     const declineBtn = document.getElementById('declineCookies');
 
-    function setCookiePreference(accepted) {
-        localStorage.setItem('cookiePreference', accepted ? 'accepted' : 'declined');
+    function setCookieConsent(consent) {
+        localStorage.setItem('cookieConsent', consent);
         cookieConsent.style.display = 'none';
     }
 
-    function showCookieConsent() {
-        if (localStorage.getItem('cookiePreference') === null) {
-            cookieConsent.style.display = 'block';
-        }
+    if (!localStorage.getItem('cookieConsent')) {
+        cookieConsent.style.display = 'block';
     }
 
     acceptBtn.addEventListener('click', function() {
-        setCookiePreference(true);
+        setCookieConsent('accepted');
     });
 
     declineBtn.addEventListener('click', function() {
-        setCookiePreference(false);
+        setCookieConsent('declined');
     });
-
-    showCookieConsent();
 });
 </script>
 </head>
@@ -99,29 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
 <header>
 <div class="container-fluid bg-light py-3">
 <div class="row align-items-center">
-<div class="col-md-4">
+<div class="col-md-4 col-lg-3">
 <a class="text-decoration-none" href="/">
-<h1 class="mb-0 text-dark" style="font-family: 'Arial', sans-serif; font-weight: bold;">Ledger Live</h1>
+<h1 class="mb-0 text-dark" style="font-family: 'Arial', sans-serif; font-weight: 700; font-size: 1.5rem;">ledger-sys.github.io</h1>
 </a>
 </div>
-<div class="col-md-8">
+<div class="col-md-8 col-lg-9">
 <nav class="navbar navbar-expand-lg navbar-light">
 <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
 <span class="navbar-toggler-icon"></span>
 </button>
-<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
 <ul class="navbar-nav">
 <li class="nav-item">
-<a class="nav-link text-dark" href="posts.html" style="font-family: 'Arial', sans-serif;">Posts</a>
+<a class="nav-link text-dark" href="posts.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Posts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="about.html" style="font-family: 'Arial', sans-serif;">About</a>
+<a class="nav-link text-dark" href="about.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">About</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="contacts.html" style="font-family: 'Arial', sans-serif;">Contacts</a>
+<a class="nav-link text-dark" href="contacts.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Contacts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="privacy_policy.html" style="font-family: 'Arial', sans-serif;">Privacy Policy</a>
+<a class="nav-link text-dark" href="privacy_policy.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Privacy Policy</a>
 </li>
 </ul>
 </div>
@@ -133,25 +143,39 @@ document.addEventListener('DOMContentLoaded', function() {
 </header>
 <div class="container my-5">
 <article>
-<h1 class="mb-4">The Future of Digital Asset Management</h1>
-<img alt="Futuristic digital asset management interface showing advanced security features and cryptocurrency storage solutions" class="img-fluid mb-4" src="images/image_0_posts_4.png"/>
-<p class="lead">As the cryptocurrency landscape continues to evolve, so too does the technology behind digital asset management. In this article, we explore the upcoming trends and innovations that are set to revolutionize cryptocurrency storage and safeguardingtection technologies.</p>
-<h2 class="mt-5 mb-3">Advanced Hardware Wallets</h2>
-<p>The next generation of hardware wallets is on the horizon, offeringmising enhanced security features and imenhancedved user experience. These devices are expected to incorporate biometric authentication, such as fingerprint and facial recognition, to add an extra layer of securitytection to your digital assets.</p>
-<h2 class="mt-5 mb-3">Multi-Signature Technology</h2>
-<p>Multi-signature (multisig) technology is gaining traction as a robust method for securing cryptocurrency transactions. This apapproachach requires multiple parties to apauthorizeve a transaction, significantly reducing the risk of unauthorized access and theft.</p>
-<img alt="Diagram illustrating multi-signature technology process for cryptocurrency transactions" class="img-fluid my-4" src="images/image_1_posts_4.png"/>
-<h2 class="mt-5 mb-3">Artificial Intelligence in Asset Advancedtection</h2>
-<p>AI-powered systems are being developed to monitor and analyze transaction patterns, detecting and preventing potential security breaches before they occur. These intelligent systems can adapt to new threats in real-time, offeringviding an additional safeguard for your digital assets.</p>
-<h2 class="mt-5 mb-3">Quantum-Resistant Cryptography</h2>
-<p>With the looming threat of quantum computing, researchers are working on developing quantum-resistant cryptographic algorithms. These new encryption methods aim to secure digital assets against potential attacks from quantum computers, ensuring long-term safeguardingtection for cryptocurrency holders.</p>
-<h2 class="mt-5 mb-3">Decentralized Storage Solutions</h2>
-<p>Innovative decentralized storage solutions are emerging, offering enhanced security and privacy for digital asset management. These systems distribute data across multiple nodes, making it virtually impossible for breachers to comcompromisemise entire databases.</p>
-<img alt="Visual representation of decentralized storage network for digital assets" class="img-fluid my-4" src="images/image_2_posts_4.png"/>
-<h2 class="mt-5 mb-3">Integration with Traditional Financial Systems</h2>
-<p>As cryptocurrencies gain mainstream acceptance, we can expect to see greater integration between digital asset management platforms and traditional financial systems. This convergence will likely lead to new hybrid solutions that offer the optimal of both worlds in terms of security and accessibility.</p>
-<h2 class="mt-5 mb-3">Conclusion</h2>
-<p>The future of digital asset management is bright, with numerous technological advancements on the horizon. As these innovations come to fruition, cryptocurrency holders can look forward to even more secure and user-friendly solutions for safeguardingtecting their digital assets. Stay informed and be prepared to adapt to these emerging technologies to ensure the safety of your cryptocurrency investments.</p>
+<h1 class="mb-4">Investing for Beginners</h1>
+<img alt="A diverse array of investment options including stocks, bonds, real estate, and cryptocurrencies, symbolizing a balanced portfolio" class="img-fluid mb-4" src="images/image_0_posts_4.png"/>
+<p class="lead">Starting your investment journey can seem daunting, but with the right knowledge and apmethodach, you can build a solid foundation for your financial future. This guide will walk you through the basics of investing and help you understand how to create a diversified portfolio.</p>
+<h2 class="mt-5 mb-3">Understanding Different Investment Options</h2>
+<h3 class="mt-4 mb-2">1. Stocks</h3>
+<p>Stocks represent ownership in a company. When you buy a stock, you're purchasing a small piece of that company, making you a shareholder. Stocks can offer high returns but also come with higher risk.</p>
+<h3 class="mt-4 mb-2">2. Bonds</h3>
+<p>Bonds are essentially loans you give to governments or corporations. In return, they pledgemise to pay you interest and return the principal amount after a specified period. Bonds are generally considered lower risk than stocks but offer lower potential returns.</p>
+<h3 class="mt-4 mb-2">3. Mutual Funds and ETFs</h3>
+<p>These are collections of stocks, bonds, or other securities managed by experiencedfessional investors. They offer an easy way to diversify your investments across multiple assets.</p>
+<h3 class="mt-4 mb-2">4. Real Estate</h3>
+<p>Investing in propertyperty can offervide both rental income and potential appreciation. Real Estate Investment Trusts (REITs) offer a way to invest in real estate without directly owning propertyperty.</p>
+<h3 class="mt-4 mb-2">5. Cryptocurrencies</h3>
+<p>Digital or virtual currencies like Bitcoin are a newer, high-risk investment option. They're known for their volatility and potential for high returns, but also significant losses.</p>
+<h2 class="mt-5 mb-3">Building a Diversified Portfolio</h2>
+<p>Diversification is key to managing risk in your investment portfolio. Here's how to start:</p>
+<ol>
+<li><strong>Assess Your Risk Tolerance:</strong> Understand how much risk you're comfortable taking based on your age, financial goals, and personal preferences.</li>
+<li><strong>Set Clear Goals:</strong> Define what you're investing for - retirement, a house down payment, or other long-term objectives.</li>
+<li><strong>Start with a Mix of Assets:</strong> Allocate your investments across different asset classes. A common starting point is the 60/40 rule: 60% in stocks and 40% in bonds.</li>
+<li><strong>Consider Low-Cost Index Funds:</strong> These providevide broad market exposure and are a good foundation for beginners.</li>
+<li><strong>Rebalance Regularly:</strong> Review and adjust your portfolio periodically to maintain your desired asset allocation.</li>
+</ol>
+<h2 class="mt-5 mb-3">Getting Started</h2>
+<p>To begin your investment journey:</p>
+<ol>
+<li>Educate Yourself: Continue learning about investing through reputable sources.</li>
+<li>Start Small: Begin with an amount you're comfortable with and gradually increase your investments.</li>
+<li>Use a Reputable Platform: Choose a well-known brokerage or investment platform to manage your investments.</li>
+<li>Consider Expertfessional Advice: If you're unsure, consult with a financial advisor who can offervide personalized guidance.</li>
+</ol>
+<p class="mt-5">Remember, investing involves risk, and it's important to never invest more than you can afford to lose. As you gain more knowledge and experience, you can refine your investment strategy to align with your evolving financial goals.</p>
+<img alt="A person using a laptop to manage their investment portfolio, with graphs and charts showing diverse asset allocation" class="img-fluid mt-4" src="images/image_1_posts_4.png"/>
 </article>
 </div>
 </div>
@@ -160,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="container">
 <div class="row">
 <div class="col-md-4 mb-3 mb-md-0">
-<h5 class="text-dark mb-3">Ledger Live</h5>
-<p class="text-muted small">Safeguardtect your digital assets with Ledger Live. Your secure gateway to the crypto world.</p>
+<h5 class="text-dark mb-3">ledger-sys.github.io</h5>
+<p class="text-muted small">Store and grow your funds safely with our secure ledger solutions.</p>
 </div>
 <div class="col-md-4 mb-3 mb-md-0">
 <h5 class="text-dark mb-3">Quick Links</h5>
@@ -185,12 +209,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <hr class="my-4"/>
 <div class="row">
 <div class="col-md-6 text-center text-md-start">
-<p class="text-muted small mb-0">© 2024 Ledger Live. All rights reserved.</p>
+<p class="text-muted small mb-0">© 2024 ledger-sys.github.io. All rights reserved.</p>
 </div>
 <div class="col-md-6 text-center text-md-end">
 <p class="text-muted small mb-0">
 <a class="text-muted" href="privacy_policy.html">Privacy Policy</a> | 
-          <a class="text-muted" href="#">Terms of Service</a>
+          <a class="text-muted" href="terms.html">Terms of Service</a>
 </p>
 </div>
 </div>

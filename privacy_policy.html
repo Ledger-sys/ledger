@@ -4,9 +4,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Protect your digital assets with Ledger Live - secure and efficient management for your cryptocurrency portfolio." name="description"/>
-<meta content="ledger, ledger live, digital assets, cryptocurrency, security" name="keywords"/>
-<title>Ledger Live | Safeguardtect Your Digital Assets</title>
+<meta content="Store and grow your funds safely with Ledger. Secure and efficient cryptocurrency management solutions." name="description"/>
+<meta content="ledger, ledger live, ledger desktop, cryptocurrency, secure storage, fund management" name="keywords"/>
+<meta content="Ledger" name="author"/>
+<title>ledger-sys.github.io</title>
 <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
@@ -17,7 +18,8 @@
         background-color: #f8f8f8;
     }
     h1, h2, h3, h4, h5, h6 {
-        color: #000;
+        font-weight: 700;
+        color: #1a1a1a;
     }
     .btn-primary {
         background-color: #4a4a4a;
@@ -31,7 +33,7 @@
 <script crossorigin="anonymous" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Add smooth scrolling to all links
+        // Implement smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -42,17 +44,29 @@
         });
 
         // Implement lazy loading for images
-        if ('loading' in HTMLImageElement.prototype) {
-            const images = document.querySelectorAll("img.lazyload");
-            images.forEach(img => {
-                img.src = img.dataset.src;
+        const images = document.querySelectorAll('img[data-src]');
+        const config = {
+            rootMargin: '0px 0px 50px 0px',
+            threshold: 0
+        };
+
+        let observer = new IntersectionObserver(function (entries, self) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    preloadImage(entry.target);
+                    self.unobserve(entry.target);
+                }
             });
-        } else {
-            // Fallback for browsers that don't support lazy loading
-            let script = document.createElement("script");
-            script.async = true;
-            script.src = "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js";
-            document.body.appendChild(script);
+        }, config);
+
+        images.forEach(image => {
+            observer.observe(image);
+        });
+
+        function preloadImage(img) {
+            const src = img.getAttribute('data-src');
+            if (!src) { return; }
+            img.src = src;
         }
     });
 </script>
@@ -71,26 +85,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const acceptBtn = document.getElementById('acceptCookies');
     const declineBtn = document.getElementById('declineCookies');
 
-    function setCookiePreference(accepted) {
-        localStorage.setItem('cookiePreference', accepted ? 'accepted' : 'declined');
+    function setCookieConsent(consent) {
+        localStorage.setItem('cookieConsent', consent);
         cookieConsent.style.display = 'none';
     }
 
-    function showCookieConsent() {
-        if (localStorage.getItem('cookiePreference') === null) {
-            cookieConsent.style.display = 'block';
-        }
+    if (!localStorage.getItem('cookieConsent')) {
+        cookieConsent.style.display = 'block';
     }
 
     acceptBtn.addEventListener('click', function() {
-        setCookiePreference(true);
+        setCookieConsent('accepted');
     });
 
     declineBtn.addEventListener('click', function() {
-        setCookiePreference(false);
+        setCookieConsent('declined');
     });
-
-    showCookieConsent();
 });
 </script>
 </head>
@@ -99,29 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
 <header>
 <div class="container-fluid bg-light py-3">
 <div class="row align-items-center">
-<div class="col-md-4">
+<div class="col-md-4 col-lg-3">
 <a class="text-decoration-none" href="/">
-<h1 class="mb-0 text-dark" style="font-family: 'Arial', sans-serif; font-weight: bold;">Ledger Live</h1>
+<h1 class="mb-0 text-dark" style="font-family: 'Arial', sans-serif; font-weight: 700; font-size: 1.5rem;">ledger-sys.github.io</h1>
 </a>
 </div>
-<div class="col-md-8">
+<div class="col-md-8 col-lg-9">
 <nav class="navbar navbar-expand-lg navbar-light">
 <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
 <span class="navbar-toggler-icon"></span>
 </button>
-<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
 <ul class="navbar-nav">
 <li class="nav-item">
-<a class="nav-link text-dark" href="posts.html" style="font-family: 'Arial', sans-serif;">Posts</a>
+<a class="nav-link text-dark" href="posts.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Posts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="about.html" style="font-family: 'Arial', sans-serif;">About</a>
+<a class="nav-link text-dark" href="about.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">About</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="contacts.html" style="font-family: 'Arial', sans-serif;">Contacts</a>
+<a class="nav-link text-dark" href="contacts.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Contacts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="privacy_policy.html" style="font-family: 'Arial', sans-serif;">Privacy Policy</a>
+<a class="nav-link text-dark" href="privacy_policy.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Privacy Policy</a>
 </li>
 </ul>
 </div>
@@ -136,85 +146,123 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="lead">Last updated: November 15, 2024</p>
 <section class="mb-4">
 <h2>1. Introduction</h2>
-<p>At Ledger Live, we are committed to safeguardingtecting your privacy and ensuring the security of your digital assets. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our services.</p>
+<p>At ledger-sys.github.io, we are committed to safeguardingtecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you use our services to store and grow your funds safely.</p>
 </section>
 <section class="mb-4">
 <h2>2. Information We Collect</h2>
-<p>We collect the following types of information:</p>
+<p>We may collect the following types of information:</p>
 <ul>
-<li>Personal Information: Name, email address, and contact details suppliedvided during account creation.</li>
-<li>Device Information: IP address, browser type, and operating system.</li>
-<li>Usage Data: Information on how you interact with our platform.</li>
-<li>Blockchain Data: Public blockchain addresses and transaction data.</li>
+<li>Personal information (e.g., name, email address, phone number)</li>
+<li>Financial information (e.g., transaction history, account balances)</li>
+<li>Device information (e.g., IP address, browser type, operating system)</li>
+<li>Usage data (e.g., features used, time spent on the platform)</li>
 </ul>
 </section>
 <section class="mb-4">
 <h2>3. How We Use Your Information</h2>
 <p>We use your information to:</p>
 <ul>
-<li>Delivervide and maintain our services</li>
-<li>Imenhanceve and personalize user experience</li>
-<li>Communicate with you about updates and security alerts</li>
-<li>Comply with legal obligations</li>
+<li>Enhancevide and imenhanceve our services, including Ledger Live and Ledger Desktop</li>
+<li>Handlecess transactions and manage your account</li>
+<li>Communicate with you about your account and our services</li>
+<li>Detect and prevent deception or unauthorized access</li>
+<li>Comply with legal and regulatory requirements</li>
 </ul>
 </section>
 <section class="mb-4">
-<h2>4. Data Safeguardingtection</h2>
-<p>Ledger Live employs industry-standard security measures to safeguardtect your information. We use encryption, secure socket layer technology (SSL), and strict access controls to safeguard your data.</p>
+<h2>4. Data Security</h2>
+<p>We implement strict security measures to safeguardtect your data, including:</p>
+<ul>
+<li>Encryption of sensitive information</li>
+<li>Regular security audits and penetration testing</li>
+<li>Access controls and authentication expertcedures</li>
+<li>Continuous monitoring for suspicious activities</li>
+</ul>
 </section>
 <section class="mb-4">
-<h2>5. Third-Party Services</h2>
-<p>We may use third-party services that collect, monitor, and analyze data. These services are bound by their own privacy policies and may collect information as specified in their respective policies.</p>
+<h2>5. Data Sharing</h2>
+<p>We do not sell your personal information. We may share your data with:</p>
+<ul>
+<li>Service expertviders who assist us in operating our platform</li>
+<li>Financial institutions to handlecess transactions</li>
+<li>Law enforcement or regulatory bodies when required by law</li>
+</ul>
 </section>
 <section class="mb-4">
 <h2>6. Your Rights</h2>
 <p>You have the right to:</p>
 <ul>
-<li>Access your personal information</li>
-<li>Correct inaccurate or incomplete data</li>
-<li>Request deletion of your data</li>
-<li>Object to opposecessing of your data</li>
+<li>Access and review your personal information</li>
+<li>Request corrections to your data</li>
+<li>Delete your account and associated data</li>
+<li>Opt-out of certain data collection and use</li>
 </ul>
 </section>
 <section class="mb-4">
 <h2>7. Changes to This Policy</h2>
-<p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.</p>
+<p>We may update this Privacy Policy from time to time. We will notify you of any significant changes through our platform or via email.</p>
 </section>
 <section class="mb-4">
 <h2>8. Contact Us</h2>
-<p>If you have any questions about this Privacy Policy, please contact us at:</p>
+<p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:</p>
 <address>
-            Ledger Live<br/>
-            1234 Crypto Street<br/>
-            Blockchain City, BC 98765<br/>
-            Email: privacy@ledgerlive.com<br/>
-            Phone: (555) 123-4567
+<strong>ledger-sys.github.io</strong><br/>
+            123 Secure Street<br/>
+            Cryptoville, CV 12345<br/>
+<abbr title="Phone">P:</abbr> (123) 456-7890<br/>
+<abbr title="Email">E:</abbr> privacy@ledger-sys.github.io
         </address>
 </section>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const heading = section.querySelector('h2');
+        if (heading) {
+            heading.addEventListener('click', () => {
+                section.classList.toggle('expanded');
+                const content = section.querySelector('p, ul');
+                if (content) {
+                    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        }
+    });
+});
+</script>
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        color: #333;
-        background-color: #f8f8f8;
-    }
-    h1, h2 {
-        color: #2c2c2c;
-    }
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+h1, h2 {
+    color: #000;
+}
+h2 {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+h2:hover {
+    color: #555;
+}
+section {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+ul {
+    padding-left: 20px;
+}
+address {
+    font-style: normal;
+    line-height: 1.8;
+}
+@media (max-width: 768px) {
     .container {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        padding: 2rem;
+        padding: 0 15px;
     }
-    ul {
-        list-style-type: square;
-        padding-left: 1.5rem;
-    }
-    address {
-        font-style: normal;
-        line-height: 1.6;
-    }
+}
 </style>
 </div>
 <footer style="width: 100%; z-index: 1000;">
@@ -222,8 +270,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="container">
 <div class="row">
 <div class="col-md-4 mb-3 mb-md-0">
-<h5 class="text-dark mb-3">Ledger Live</h5>
-<p class="text-muted small">Safeguardtect your digital assets with Ledger Live. Your secure gateway to the crypto world.</p>
+<h5 class="text-dark mb-3">ledger-sys.github.io</h5>
+<p class="text-muted small">Store and grow your funds safely with our secure ledger solutions.</p>
 </div>
 <div class="col-md-4 mb-3 mb-md-0">
 <h5 class="text-dark mb-3">Quick Links</h5>
@@ -247,12 +295,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <hr class="my-4"/>
 <div class="row">
 <div class="col-md-6 text-center text-md-start">
-<p class="text-muted small mb-0">© 2024 Ledger Live. All rights reserved.</p>
+<p class="text-muted small mb-0">© 2024 ledger-sys.github.io. All rights reserved.</p>
 </div>
 <div class="col-md-6 text-center text-md-end">
 <p class="text-muted small mb-0">
 <a class="text-muted" href="privacy_policy.html">Privacy Policy</a> | 
-          <a class="text-muted" href="#">Terms of Service</a>
+          <a class="text-muted" href="terms.html">Terms of Service</a>
 </p>
 </div>
 </div>

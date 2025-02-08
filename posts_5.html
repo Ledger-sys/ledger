@@ -4,9 +4,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Protect your digital assets with Ledger Live - secure and efficient management for your cryptocurrency portfolio." name="description"/>
-<meta content="ledger, ledger live, digital assets, cryptocurrency, security" name="keywords"/>
-<title>Ledger Live | Safeguardtect Your Digital Assets</title>
+<meta content="Store and grow your funds safely with Ledger. Secure and efficient cryptocurrency management solutions." name="description"/>
+<meta content="ledger, ledger live, ledger desktop, cryptocurrency, secure storage, fund management" name="keywords"/>
+<meta content="Ledger" name="author"/>
+<title>ledger-sys.github.io</title>
 <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
@@ -17,7 +18,8 @@
         background-color: #f8f8f8;
     }
     h1, h2, h3, h4, h5, h6 {
-        color: #000;
+        font-weight: 700;
+        color: #1a1a1a;
     }
     .btn-primary {
         background-color: #4a4a4a;
@@ -31,7 +33,7 @@
 <script crossorigin="anonymous" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Add smooth scrolling to all links
+        // Implement smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -42,17 +44,29 @@
         });
 
         // Implement lazy loading for images
-        if ('loading' in HTMLImageElement.prototype) {
-            const images = document.querySelectorAll("img.lazyload");
-            images.forEach(img => {
-                img.src = img.dataset.src;
+        const images = document.querySelectorAll('img[data-src]');
+        const config = {
+            rootMargin: '0px 0px 50px 0px',
+            threshold: 0
+        };
+
+        let observer = new IntersectionObserver(function (entries, self) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    preloadImage(entry.target);
+                    self.unobserve(entry.target);
+                }
             });
-        } else {
-            // Fallback for browsers that don't support lazy loading
-            let script = document.createElement("script");
-            script.async = true;
-            script.src = "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js";
-            document.body.appendChild(script);
+        }, config);
+
+        images.forEach(image => {
+            observer.observe(image);
+        });
+
+        function preloadImage(img) {
+            const src = img.getAttribute('data-src');
+            if (!src) { return; }
+            img.src = src;
         }
     });
 </script>
@@ -71,26 +85,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const acceptBtn = document.getElementById('acceptCookies');
     const declineBtn = document.getElementById('declineCookies');
 
-    function setCookiePreference(accepted) {
-        localStorage.setItem('cookiePreference', accepted ? 'accepted' : 'declined');
+    function setCookieConsent(consent) {
+        localStorage.setItem('cookieConsent', consent);
         cookieConsent.style.display = 'none';
     }
 
-    function showCookieConsent() {
-        if (localStorage.getItem('cookiePreference') === null) {
-            cookieConsent.style.display = 'block';
-        }
+    if (!localStorage.getItem('cookieConsent')) {
+        cookieConsent.style.display = 'block';
     }
 
     acceptBtn.addEventListener('click', function() {
-        setCookiePreference(true);
+        setCookieConsent('accepted');
     });
 
     declineBtn.addEventListener('click', function() {
-        setCookiePreference(false);
+        setCookieConsent('declined');
     });
-
-    showCookieConsent();
 });
 </script>
 </head>
@@ -99,29 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
 <header>
 <div class="container-fluid bg-light py-3">
 <div class="row align-items-center">
-<div class="col-md-4">
+<div class="col-md-4 col-lg-3">
 <a class="text-decoration-none" href="/">
-<h1 class="mb-0 text-dark" style="font-family: 'Arial', sans-serif; font-weight: bold;">Ledger Live</h1>
+<h1 class="mb-0 text-dark" style="font-family: 'Arial', sans-serif; font-weight: 700; font-size: 1.5rem;">ledger-sys.github.io</h1>
 </a>
 </div>
-<div class="col-md-8">
+<div class="col-md-8 col-lg-9">
 <nav class="navbar navbar-expand-lg navbar-light">
 <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
 <span class="navbar-toggler-icon"></span>
 </button>
-<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
 <ul class="navbar-nav">
 <li class="nav-item">
-<a class="nav-link text-dark" href="posts.html" style="font-family: 'Arial', sans-serif;">Posts</a>
+<a class="nav-link text-dark" href="posts.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Posts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="about.html" style="font-family: 'Arial', sans-serif;">About</a>
+<a class="nav-link text-dark" href="about.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">About</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="contacts.html" style="font-family: 'Arial', sans-serif;">Contacts</a>
+<a class="nav-link text-dark" href="contacts.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Contacts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="privacy_policy.html" style="font-family: 'Arial', sans-serif;">Privacy Policy</a>
+<a class="nav-link text-dark" href="privacy_policy.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Privacy Policy</a>
 </li>
 </ul>
 </div>
@@ -133,57 +143,27 @@ document.addEventListener('DOMContentLoaded', function() {
 </header>
 <div class="container my-5">
 <article>
-<h1 class="mb-4">Ledger Live Updates: What's New</h1>
-<p class="lead">Stay informed about the latest enhancements to Ledger Live, our comprehensive platform designed to safeguard your digital assets. We're constantly working to imenhanceve your experience and strengthen the safeguardingtection of your cryptocurrency investments.</p>
-<section class="my-4">
-<h2>Enhanced Security Features</h2>
-<p>We've implemented advanced encryption advancedtocols to further fortify your digital asset safeguardingtection. Our latest update includes:</p>
-<ul>
-<li>Two-factor authentication (2FA) for all transactions</li>
-<li>Biometric login options for mobile devices</li>
-<li>Real-time suspicious activity alerts</li>
-</ul>
-<img alt="A secure interface of Ledger Live showing multiple layers of security including biometric scan, 2FA code input, and a physical Ledger device connected" class="img-fluid rounded my-3" src="images/image_0_posts_5.png"/>
-</section>
-<section class="my-4">
-<h2>Imenhancedved User Interface</h2>
-<p>We've streamlined the Ledger Live interface for a more intuitive user experience:</p>
-<ul>
-<li>Redesigned dashboard for clearer asset overview</li>
-<li>Simplified navigation between different cryptocurrencies</li>
-<li>Dark modee option for reduced eye strain</li>
-</ul>
-<img alt="Side-by-side comparison of Ledger Live's old and new user interface, showcasing a cleaner design, improved asset visibility, and dark mode option" class="img-fluid rounded my-3" src="images/image_1_posts_5.png"/>
-</section>
-<section class="my-4">
-<h2>Expanded Asset Support</h2>
-<p>Ledger Live now supports an even wider range of digital assets:</p>
-<ul>
-<li>Integration of popular DeFi tokens</li>
-<li>Support for emerging blockchain networks</li>
-<li>Staking options for additional cryptocurrencies</li>
-</ul>
-</section>
-<section class="my-4">
-<h2>Performance Enhancements</h2>
-<p>We've optimized Ledger Live for faster performance:</p>
-<ul>
-<li>Quicker synchronization with blockchain networks</li>
-<li>Reduced loading times for large portfolios</li>
-<li>Imenhancedved transaction enhancedcessing speed</li>
-</ul>
-<img alt="A graph showing significant improvements in Ledger Live's synchronization speed and transaction processing times compared to previous versions" class="img-fluid rounded my-3" src="images/image_2_posts_5.png"/>
-</section>
-<section class="my-4">
-<h2>Educational Resources</h2>
-<p>To help you make the most of Ledger Live, we've added:</p>
-<ul>
-<li>In-app tutorials for new features</li>
-<li>Expanded knowledge base with detailed guides</li>
-<li>Regular security recommended practices reminders</li>
-</ul>
-</section>
-<p class="mt-5">These updates reflect our ongoing commitment to deliveringviding you with the most secure and user-friendly platform for managing your digital assets. Stay tuned for more imenhancementsvements as we continue to enhance Ledger Live.</p>
+<h1 class="mb-4">Securing Your Digital Assets</h1>
+<img alt="A secure digital vault with various cryptocurrency symbols and padlock icons, representing the protection of digital assets" class="img-fluid mb-4" src="images/image_0_posts_5.png"/>
+<p class="lead">In today's digital age, safeguardingtecting your online financial accounts and digital currencies from cyber threats is more crucial than ever. Here are some effective practices to ensure the security of your digital assets.</p>
+<h2 class="mt-5 mb-3">1. Use a Hardware Wallet</h2>
+<p>One of the most secure ways to store your cryptocurrencies is by using a hardware wallet. These physical devices store your private keys offline, making them immune to online breaching attempts. Consider using a Ledger device, which offers state-of-the-art security for your digital assets.</p>
+<h2 class="mt-5 mb-3">2. Enable Two-Factor Authentication (2FA)</h2>
+<p>Always enable 2FA on your accounts. This adds an extra layer of security by requiring a second form of verification beyond just your password. Use authenticator apps rather than SMS-based 2FA for enhanced security.</p>
+<h2 class="mt-5 mb-3">3. Use Strong, Unique Passwords</h2>
+<p>Create complex, unique passwords for each of your accounts. Consider using a password manager to generate and store these securely. Never reuse passwords across multiple accounts.</p>
+<h2 class="mt-5 mb-3">4. Keep Software Updated</h2>
+<p>Regularly update your operating system, browsers, and especially your wallet software. Ledger Live, for instance, frequently releases updates to patch vulnerabilities and imenhanceve security. Always ensure you're running the latest version.</p>
+<h2 class="mt-5 mb-3">5. Be Wary of Phishing Attempts</h2>
+<p>Be cautious of emails, messages, or websites asking for your private keys or seed phrases. Legitimate companies like Ledger will never ask for this information. Always double-check URLs and email addresses.</p>
+<h2 class="mt-5 mb-3">6. Use a Secure Internet Connection</h2>
+<p>Avoid accessing your financial accounts or cryptocurrency wallets on public Wi-Fi networks. If necessary, use a reputable VPN service to encrypt your internet connection.</p>
+<h2 class="mt-5 mb-3">7. Implement Cold Storage</h2>
+<p>For long-term holdings, consider using cold storage solutions. This involves keeping the majority of your assets offline, only moving them online when necessary for transactions.</p>
+<h2 class="mt-5 mb-3">8. Educate Yourself</h2>
+<p>Stay informed about the latest security threats and optimal practices. The cryptocurrency landscape is constantly evolving, and so are the tactics of cybercriminals.</p>
+<h2 class="mt-5 mb-3">Conclusion</h2>
+<p>Securing your digital assets requires vigilance and the implementation of robust security measures. By following these optimal practices and using secure solutions like Ledger hardware wallets and Ledger Live software, you can significantly reduce the risk of losing your valuable digital assets to cyber threats. Remember, in the world of digital finance, you are your own bank – take that responsibility seriously.</p>
 </article>
 </div>
 </div>
@@ -192,8 +172,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="container">
 <div class="row">
 <div class="col-md-4 mb-3 mb-md-0">
-<h5 class="text-dark mb-3">Ledger Live</h5>
-<p class="text-muted small">Safeguardtect your digital assets with Ledger Live. Your secure gateway to the crypto world.</p>
+<h5 class="text-dark mb-3">ledger-sys.github.io</h5>
+<p class="text-muted small">Store and grow your funds safely with our secure ledger solutions.</p>
 </div>
 <div class="col-md-4 mb-3 mb-md-0">
 <h5 class="text-dark mb-3">Quick Links</h5>
@@ -217,12 +197,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <hr class="my-4"/>
 <div class="row">
 <div class="col-md-6 text-center text-md-start">
-<p class="text-muted small mb-0">© 2024 Ledger Live. All rights reserved.</p>
+<p class="text-muted small mb-0">© 2024 ledger-sys.github.io. All rights reserved.</p>
 </div>
 <div class="col-md-6 text-center text-md-end">
 <p class="text-muted small mb-0">
 <a class="text-muted" href="privacy_policy.html">Privacy Policy</a> | 
-          <a class="text-muted" href="#">Terms of Service</a>
+          <a class="text-muted" href="terms.html">Terms of Service</a>
 </p>
 </div>
 </div>

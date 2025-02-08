@@ -4,9 +4,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Protect your digital assets with Ledger Live - secure and efficient management for your cryptocurrency portfolio." name="description"/>
-<meta content="ledger, ledger live, digital assets, cryptocurrency, security" name="keywords"/>
-<title>Ledger Live | Safeguardtect Your Digital Assets</title>
+<meta content="Store and grow your funds safely with Ledger. Secure and efficient cryptocurrency management solutions." name="description"/>
+<meta content="ledger, ledger live, ledger desktop, cryptocurrency, secure storage, fund management" name="keywords"/>
+<meta content="Ledger" name="author"/>
+<title>ledger-sys.github.io</title>
 <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
@@ -17,7 +18,8 @@
         background-color: #f8f8f8;
     }
     h1, h2, h3, h4, h5, h6 {
-        color: #000;
+        font-weight: 700;
+        color: #1a1a1a;
     }
     .btn-primary {
         background-color: #4a4a4a;
@@ -31,7 +33,7 @@
 <script crossorigin="anonymous" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Add smooth scrolling to all links
+        // Implement smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -42,17 +44,29 @@
         });
 
         // Implement lazy loading for images
-        if ('loading' in HTMLImageElement.prototype) {
-            const images = document.querySelectorAll("img.lazyload");
-            images.forEach(img => {
-                img.src = img.dataset.src;
+        const images = document.querySelectorAll('img[data-src]');
+        const config = {
+            rootMargin: '0px 0px 50px 0px',
+            threshold: 0
+        };
+
+        let observer = new IntersectionObserver(function (entries, self) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    preloadImage(entry.target);
+                    self.unobserve(entry.target);
+                }
             });
-        } else {
-            // Fallback for browsers that don't support lazy loading
-            let script = document.createElement("script");
-            script.async = true;
-            script.src = "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js";
-            document.body.appendChild(script);
+        }, config);
+
+        images.forEach(image => {
+            observer.observe(image);
+        });
+
+        function preloadImage(img) {
+            const src = img.getAttribute('data-src');
+            if (!src) { return; }
+            img.src = src;
         }
     });
 </script>
@@ -71,26 +85,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const acceptBtn = document.getElementById('acceptCookies');
     const declineBtn = document.getElementById('declineCookies');
 
-    function setCookiePreference(accepted) {
-        localStorage.setItem('cookiePreference', accepted ? 'accepted' : 'declined');
+    function setCookieConsent(consent) {
+        localStorage.setItem('cookieConsent', consent);
         cookieConsent.style.display = 'none';
     }
 
-    function showCookieConsent() {
-        if (localStorage.getItem('cookiePreference') === null) {
-            cookieConsent.style.display = 'block';
-        }
+    if (!localStorage.getItem('cookieConsent')) {
+        cookieConsent.style.display = 'block';
     }
 
     acceptBtn.addEventListener('click', function() {
-        setCookiePreference(true);
+        setCookieConsent('accepted');
     });
 
     declineBtn.addEventListener('click', function() {
-        setCookiePreference(false);
+        setCookieConsent('declined');
     });
-
-    showCookieConsent();
 });
 </script>
 </head>
@@ -99,29 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
 <header>
 <div class="container-fluid bg-light py-3">
 <div class="row align-items-center">
-<div class="col-md-4">
+<div class="col-md-4 col-lg-3">
 <a class="text-decoration-none" href="/">
-<h1 class="mb-0 text-dark" style="font-family: 'Arial', sans-serif; font-weight: bold;">Ledger Live</h1>
+<h1 class="mb-0 text-dark" style="font-family: 'Arial', sans-serif; font-weight: 700; font-size: 1.5rem;">ledger-sys.github.io</h1>
 </a>
 </div>
-<div class="col-md-8">
+<div class="col-md-8 col-lg-9">
 <nav class="navbar navbar-expand-lg navbar-light">
 <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
 <span class="navbar-toggler-icon"></span>
 </button>
-<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
 <ul class="navbar-nav">
 <li class="nav-item">
-<a class="nav-link text-dark" href="posts.html" style="font-family: 'Arial', sans-serif;">Posts</a>
+<a class="nav-link text-dark" href="posts.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Posts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="about.html" style="font-family: 'Arial', sans-serif;">About</a>
+<a class="nav-link text-dark" href="about.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">About</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="contacts.html" style="font-family: 'Arial', sans-serif;">Contacts</a>
+<a class="nav-link text-dark" href="contacts.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Contacts</a>
 </li>
 <li class="nav-item">
-<a class="nav-link text-dark" href="privacy_policy.html" style="font-family: 'Arial', sans-serif;">Privacy Policy</a>
+<a class="nav-link text-dark" href="privacy_policy.html" style="font-family: 'Arial', sans-serif; font-weight: 500;">Privacy Policy</a>
 </li>
 </ul>
 </div>
@@ -134,41 +144,41 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="container my-5">
 <div class="row">
 <div class="col-lg-8 mx-auto">
-<h1 class="text-center mb-4">About Ledger Live</h1>
-<p class="lead text-muted">Welcome to Ledger Live, your trusted source for information on safeguardingtecting your digital assets.</p>
-<h2 class="mt-5 mb-3">Our Mission</h2>
-<p>At Ledger Live, we are committed to empowering individuals and businesses with the knowledge and tools necessary to safeguard their cryptocurrency investments. In an ever-evolving digital landscape, we believe that security should be accessible and understandable to everyone.</p>
+<h1 class="text-center mb-4">About Our Blog</h1>
+<p class="lead text-muted">Welcome to ledger-sys.github.io, your trusted resource for safely storing and growing your funds.</p>
+<h2 class="mt-5 mb-3">Our Purpose</h2>
+<p>At ledger-sys.github.io, we are dedicated to empowering individuals with the knowledge and tools necessary to manage their digital assets securely. Our blog serves as a comprehensive guide to navigating the complex world of cryptocurrency storage and investment, with a particular focus on Ledger solutions.</p>
 <h2 class="mt-5 mb-3">What We Offer</h2>
 <ul class="list-unstyled">
-<li class="mb-3"><i class="fas fa-shield-alt mr-2 text-secondary"></i> In-depth guides on using Ledger hardware wallets</li>
-<li class="mb-3"><i class="fas fa-book-open mr-2 text-secondary"></i> Educational content on blockchain security</li>
-<li class="mb-3"><i class="fas fa-newspaper mr-2 text-secondary"></i> Latest news and updates in the cryptocurrency security space</li>
-<li class="mb-3"><i class="fas fa-users mr-2 text-secondary"></i> Community-driven discussions and support</li>
+<li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>In-depth tutorials on using Ledger Live and Ledger Desktop applications</li>
+<li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Expert advice on cryptocurrency security optimal practices</li>
+<li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Regular updates on the latest developments in blockchain technology</li>
+<li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Strategies for growing your digital asset portfolio responsibly</li>
 </ul>
 <h2 class="mt-5 mb-3">Our Team</h2>
-<p>Ledger Live is run by a dedicated team of cybersecurity experts, blockchain enthusiasts, and financial technology specialistsfessionals. Our diverse backgrounds allow us to apapproachach digital asset safeguardingtection from multiple angles, ensuring comprehensive coverage of this complex field.</p>
+<p>Our blog is maintained by a team of cryptocurrency enthusiasts and security experts who are passionate about helping others navigate the digital asset landscape safely. With years of experience in blockchain technology and financial management, we strive to offervide accurate, up-to-date, and actionable information.</p>
 <div class="row mt-5">
 <div class="col-md-4 mb-4">
-<img alt="Portrait of Jane Doe, a cybersecurity expert with short dark hair and glasses, wearing a professional black blazer" class="img-fluid rounded-circle mb-3" src="images/image_0_about.png"/>
-<h4>Jane Doe</h4>
-<p class="text-muted">Cybersecurity Expert</p>
+<img alt="Portrait of Jane Doe, a cryptocurrency expert with short dark hair and glasses, smiling confidently" class="img-fluid rounded-circle mb-3" src="images/image_0_about.png"/>
+<h3 class="h5">Jane Doe</h3>
+<p class="text-muted">Cryptocurrency Analyst</p>
 </div>
 <div class="col-md-4 mb-4">
-<img alt="Portrait of John Smith, a blockchain developer with a beard and casual grey shirt, smiling at the camera" class="img-fluid rounded-circle mb-3" src="images/image_1_about.png"/>
-<h4>John Smith</h4>
+<img alt="Portrait of John Smith, a blockchain developer with a beard and casual attire, looking approachable" class="img-fluid rounded-circle mb-3" src="images/image_1_about.png"/>
+<h3 class="h5">John Smith</h3>
 <p class="text-muted">Blockchain Developer</p>
 </div>
 <div class="col-md-4 mb-4">
-<img alt="Portrait of Emily Brown, a financial analyst with long blonde hair, wearing a white blouse and looking professional" class="img-fluid rounded-circle mb-3" src="images/image_2_about.png"/>
-<h4>Emily Brown</h4>
-<p class="text-muted">Financial Analyst</p>
+<img alt="Portrait of Sarah Johnson, a security expert with long blonde hair, wearing a professional suit" class="img-fluid rounded-circle mb-3" src="images/image_2_about.png"/>
+<h3 class="h5">Sarah Johnson</h3>
+<p class="text-muted">Security Specialist</p>
 </div>
 </div>
 <h2 class="mt-5 mb-3">Our Commitment</h2>
-<p>We are dedicated to offeringviding accurate, up-to-date, and practical information to help you navigate the world of digital asset security. Whether you're a seasoned crypto investor or just getting started, Ledger Live is here to support your journey towards robust digital asset safeguardingtection.</p>
+<p>We are committed to providingviding you with reliable, unbiased information to help you make informed decisions about your digital assets. Whether you're new to cryptocurrency or an experienced investor, our goal is to enhance your understanding of secure storage solutions and help you leverage tools like Ledger Live and Ledger Desktop to safeguardtect and grow your funds.</p>
 <div class="text-center mt-5">
-<p class="lead">Join us in our mission to create a safer digital future.</p>
-<a class="btn btn-lg btn-outline-secondary" href="#">Explore Our Resources</a>
+<p class="lead">Join us on this journey to financial empowerment and security in the digital age.</p>
+<a class="btn btn-dark btn-lg" href="#">Explore Our Articles</a>
 </div>
 </div>
 </div>
@@ -193,8 +203,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="container">
 <div class="row">
 <div class="col-md-4 mb-3 mb-md-0">
-<h5 class="text-dark mb-3">Ledger Live</h5>
-<p class="text-muted small">Safeguardtect your digital assets with Ledger Live. Your secure gateway to the crypto world.</p>
+<h5 class="text-dark mb-3">ledger-sys.github.io</h5>
+<p class="text-muted small">Store and grow your funds safely with our secure ledger solutions.</p>
 </div>
 <div class="col-md-4 mb-3 mb-md-0">
 <h5 class="text-dark mb-3">Quick Links</h5>
@@ -218,12 +228,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <hr class="my-4"/>
 <div class="row">
 <div class="col-md-6 text-center text-md-start">
-<p class="text-muted small mb-0">© 2024 Ledger Live. All rights reserved.</p>
+<p class="text-muted small mb-0">© 2024 ledger-sys.github.io. All rights reserved.</p>
 </div>
 <div class="col-md-6 text-center text-md-end">
 <p class="text-muted small mb-0">
 <a class="text-muted" href="privacy_policy.html">Privacy Policy</a> | 
-          <a class="text-muted" href="#">Terms of Service</a>
+          <a class="text-muted" href="terms.html">Terms of Service</a>
 </p>
 </div>
 </div>
